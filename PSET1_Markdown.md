@@ -2,7 +2,6 @@
 output: 
   html_document: 
     keep_md: true
-  pdf_document:
   md_document:
     preserve_yaml: false
 ---
