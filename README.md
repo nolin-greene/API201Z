@@ -1,4 +1,3 @@
-API201Z
-add a comment here
+#### PSET 1 Read Me
 
-This is a line from RStudio
+This problem set was the first assigned during my introductory statistics class as a Masters in Public Policy Student at the Harvard Kennedy School. This course (API-201z) was originally taken in Fall 2014. However in an attempt to replicate the problem sets using R and R Markdown, I am re-attempting them in the Spring of 2020. In this repo you should find the original problem set questions as well as any non-cloud accessible datasets. The repo should also include the raw R code, as well as the markdown file in a variety of different formats (.rmd, .md, .pdf, .html). 
