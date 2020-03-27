@@ -1,7 +1,10 @@
 ---
 output: 
   html_document: 
-    keep_md: yes
+    keep_md: true
+  pdf_document:
+  md_document:
+    preserve_yaml: false
 ---
 <center>
 
@@ -12,7 +15,6 @@ output:
 #### __Nolin Greene__
 
 </center>
-here are some changes
 
 __Question #1: Case Study - Pine Street Inn__
 
@@ -89,7 +91,7 @@ kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 ```
 
 *1.8:* 
-```{r, echo = F}
+```{r}
 d<-d %>%
   mutate(bin = case_when(
       los<4 ~ "3 Days or Less",
@@ -113,7 +115,7 @@ d %>%
 
 *1.9:* 
 
-```{r,echo = F}
+```{r}
 ggplot(d, aes(x=los))+
   geom_histogram(colour="black", fill = "slategray", binwidth = 10)+
   labs(x="Length of Stay (days)", y="Number of Guests", title="Distribution of Guests by Length of Stay")
@@ -154,5 +156,4 @@ state_exp %>%
   group_by(cat)%>%
   summarize(sum = sum(amount))
 ```
-
 

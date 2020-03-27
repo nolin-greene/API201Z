@@ -2,6 +2,9 @@
 output: 
   html_document: 
     keep_md: true
+  pdf_document:
+  md_document:
+    preserve_yaml: false
 ---
 <center>
 
@@ -12,7 +15,6 @@ output:
 #### __Nolin Greene__
 
 </center>
-here are some changes
 
 __Question #1: Case Study - Pine Street Inn__
 
@@ -178,10 +180,38 @@ d%>%
 </table>
 
 *1.8:* 
+
+```r
+d<-d %>%
+  mutate(bin = case_when(
+      los<4 ~ "3 Days or Less",
+      los>3 & los<11 ~ "4 to 10 Days",
+      los>10 & los <36 ~ "11 to 35 Days",
+      los>35 & los<151 ~"36 to 150 Days",
+      los>150 ~ "151 Days or More"),
+    bin = factor(bin, levels = c("3 Days or Less","4 to 10 Days","11 to 35 Days",
+                 "36 to 150 Days", "151 Days or More")))
+
+d %>%
+  group_by(bin) %>%
+  summarize(n=n(), los=sum(los)) %>%
+  gather(num, stat,-bin) %>%
+  ggplot(aes(x=bin, y= stat, color = num))+
+  geom_point()+
+  labs(x="Length of Stay", y="Sum of Statistic", title="Distribution of Guests and Length of Stay")
+```
+
 ![](PSET1_Markdown_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
 *1.9:* 
+
+
+```r
+ggplot(d, aes(x=los))+
+  geom_histogram(colour="black", fill = "slategray", binwidth = 10)+
+  labs(x="Length of Stay (days)", y="Number of Guests", title="Distribution of Guests by Length of Stay")
+```
 
 ![](PSET1_Markdown_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
@@ -241,4 +271,3 @@ state_exp %>%
 ## 3 Health       82392.
 ```
 
-here are some more lines of code 
