@@ -27,7 +27,7 @@ rm(list=ls())
 options(scipen = 999)
 
 library(readxl);library(dplyr);library(ggplot2);
-library(tidyr);library(knitr);library(kableExtra)
+library(tidyr);library(knitr);library(kableExtra); library(stringr)
 
 d<-read_excel("Pine Street Inn Length of Stay Data - Solutions.xls", 
               sheet = 1, cell_cols(1:2))
@@ -192,13 +192,22 @@ d<-d %>%
     bin = factor(bin, levels = c("3 Days or Less","4 to 10 Days","11 to 35 Days",
                  "36 to 150 Days", "151 Days or More")))
 
-d %>%
-  group_by(bin) %>%
-  summarize(n=n(), los=sum(los)) %>%
-  gather(num, stat,-bin) %>%
-  ggplot(aes(x=bin, y= stat, color = num))+
-  geom_point()+
-  labs(x="Length of Stay", y="Sum of Statistic", title="Distribution of Guests and Length of Stay")
+count<-group_by(d, bin)%>%
+  summarise(n = n(), los=sum(los))
+
+count<-mutate(count,
+       Clients = count$n/sum(count$n),
+       Bed_Nights = count$los/sum(count$los))
+
+count<-count[c(1,4,5)]
+
+g<-gather(count, stat, percent, -bin)
+
+ggplot(g,aes(x=bin, y=percent, group = stat, color=stat))+
+  geom_line()+
+  theme(legend.title = element_blank()) +
+  labs(x="Length of Stay", y="Percent of Total", title = "Total Clients and Bednights by Length of Stay")+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 8))
 ```
 
 ![](PSET1_Markdown_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
